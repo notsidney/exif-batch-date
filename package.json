@@ -23,6 +23,7 @@
     "react-dom": "^18.2.0"
   },
   "devDependencies": {
+    "@netlify/plugin-lighthouse": "^4.0.7",
     "@types/lodash-es": "^4.17.7",
     "@types/react": "^18.0.28",
     "@types/react-beautiful-dnd": "^13.1.4",

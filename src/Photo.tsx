@@ -22,8 +22,8 @@ export default function Photo({ file, date, index, onDelete }: IPhotoProps) {
 
 		const fileReader = new FileReader();
 		fileReader.onload = (e) => {
-			const { result } = e.target;
-			if (result) setFileDataURL(e.target.result);
+			const { result } = e.target as any;
+			if (result) setFileDataURL(result);
 		};
 		fileReader.readAsDataURL(file);
 	}, [file]);

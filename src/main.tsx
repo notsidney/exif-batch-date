@@ -1,4 +1,3 @@
-import React from "react";
 import ReactDOM from "react-dom/client";
 import App from "./App";
 
@@ -21,7 +20,7 @@ const {
 	Image,
 	Text,
 	IconButton,
-} = chakraTheme.components;
+} = chakraTheme.components as any;
 
 const theme = extendBaseTheme({
 	components: {
