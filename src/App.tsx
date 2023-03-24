@@ -43,9 +43,10 @@ export default function App() {
 
 					<Flex gap={2} wrap="wrap" mb={2}>
 						<Button
+							as="label"
+							htmlFor="photos"
 							colorScheme={photos.length === 0 ? "blue" : undefined}
 							leftIcon={<AttachmentIcon />}
-							onClick={() => inputRef.current!.click()}
 							flexGrow={1}>
 							Select photos
 						</Button>
@@ -53,7 +54,6 @@ export default function App() {
 							type="file"
 							accept="image/jpeg"
 							multiple
-							aria-label="Photos"
 							name="photos"
 							id="photos"
 							ref={inputRef}
