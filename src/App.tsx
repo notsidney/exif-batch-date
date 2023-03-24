@@ -1,5 +1,5 @@
 import { useState, useRef, startTransition } from "react";
-import { setSeconds } from "date-fns";
+import { format, setSeconds } from "date-fns";
 import { DragDropContext, Droppable } from "react-beautiful-dnd";
 import { reverse } from "lodash-es";
 
@@ -20,11 +20,12 @@ import Photo from "./Photo";
 
 export default function App() {
 	const [photos, setPhotos] = useState<File[]>([]);
-	const [baseDate, setBaseDate] = useState<Date>(new Date());
+	const [baseDate, setBaseDate] = useState<Date | null>(null);
 	const [dates, setDates] = useState<Date[]>([]);
 	const inputRef = useRef<HTMLInputElement>(null);
 
 	const setPhotosDates = (baseDate: Date) => {
+		if (!baseDate) return null;
 		const newDates = [];
 		for (let i = 0; i < photos.length; i++) {
 			newDates[i] = setSeconds(baseDate, i);
@@ -61,7 +62,7 @@ export default function App() {
 								const photos = [];
 								for (const file of e.target.files) photos.push(file);
 								setPhotos(photos);
-								setPhotosDates(baseDate);
+								setBaseDate(null);
 							}}
 							style={{ display: "none" }}
 						/>
@@ -77,7 +78,10 @@ export default function App() {
 
 							<Button
 								leftIcon={<DeleteIcon />}
-								onClick={() => setPhotos([])}
+								onClick={() => {
+									setPhotos([]);
+									setBaseDate(null);
+								}}
 								isDisabled={photos.length < 1}
 								flexGrow={1}>
 								Reset
@@ -91,6 +95,8 @@ export default function App() {
 							placeholder="Select Date and Time"
 							type="datetime-local"
 							name="baseDate"
+							isDisabled={photos.length === 0}
+							value={baseDate ? format(baseDate, "yyyy-MM-dd'T'HH:mm") : ""}
 							onChange={(e) => {
 								setBaseDate(new Date(e.target.value));
 								startTransition(() => {
