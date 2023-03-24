@@ -1,6 +1,7 @@
 import { useState, useRef, startTransition } from "react";
 import { setSeconds } from "date-fns";
 import { DragDropContext, Droppable } from "react-beautiful-dnd";
+import { reverse } from "lodash-es";
 
 import {
 	Container,
@@ -13,7 +14,7 @@ import {
 	InputLeftAddon,
 	VStack,
 } from "@chakra-ui/react";
-import { AttachmentIcon, DeleteIcon } from "@chakra-ui/icons";
+import { AttachmentIcon, RepeatIcon, DeleteIcon } from "@chakra-ui/icons";
 
 import Photo from "./Photo";
 
@@ -39,10 +40,9 @@ export default function App() {
 						EXIF Batch Date
 					</Heading>
 
-					<Flex gap={2}>
+					<Flex gap={2} wrap="wrap" mb={2}>
 						<Button
 							colorScheme={photos.length === 0 ? "blue" : undefined}
-							mb="5"
 							leftIcon={<AttachmentIcon />}
 							onClick={() => inputRef.current!.click()}
 							flexGrow={1}>
@@ -66,12 +66,23 @@ export default function App() {
 							style={{ display: "none" }}
 						/>
 
-						<Button
-							leftIcon={<DeleteIcon />}
-							onClick={() => setPhotos([])}
-							isDisabled={photos.length < 1}>
-							Reset
-						</Button>
+						<Flex flexGrow={1} gap={2}>
+							<Button
+								leftIcon={<RepeatIcon />}
+								onClick={() => setPhotos((photos) => reverse([...photos]))}
+								isDisabled={photos.length < 1}
+								flexGrow={1}>
+								Reverse
+							</Button>
+
+							<Button
+								leftIcon={<DeleteIcon />}
+								onClick={() => setPhotos([])}
+								isDisabled={photos.length < 1}
+								flexGrow={1}>
+								Reset
+							</Button>
+						</Flex>
 					</Flex>
 
 					<InputGroup as="label">
