@@ -65,6 +65,8 @@ export default function Photo({ file, date, index, onDelete }: IPhotoProps) {
 						borderRadius={4}
 						width={100}
 						height={67}
+						fit="contain"
+						boxShadow="xs"
 					/>
 
 					<Text fontSize="sm" flexShrink={0}>
